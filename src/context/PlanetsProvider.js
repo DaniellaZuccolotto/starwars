@@ -16,7 +16,6 @@ function PlanetsProvider({ children }) {
         column: 'population',
         comparison: 'maior que',
         value: 0 }],
-      buttonFilter: false,
     },
   );
 
@@ -39,8 +38,8 @@ function PlanetsProvider({ children }) {
     });
   };
 
-  const planetsFilter = () => {
-    if (search.buttonFilter) {
+  const planetsFilter = (buttonFilter) => {
+    if (buttonFilter) {
       return data.filter((planets) => {
         switch (comparison) {
         case 'maior que':
@@ -64,8 +63,8 @@ function PlanetsProvider({ children }) {
         column,
         comparison,
         value }],
-      buttonFilter: true,
     });
+    setData(planetsFilter(true));
   };
 
   useEffect(() => {
