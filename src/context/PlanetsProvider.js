@@ -6,11 +6,17 @@ import ResquestAPI from '../services/ResquestAPI';
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
   const [apiLoading, setApiLoading] = useState(false);
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState(0);
   const [search, setSearch] = useState(
     {
-      filterByName: {
-        name: '',
-      },
+      filterByName: { name: '' },
+      filterByNumericValues: [{
+        column: 'population',
+        comparison: 'maior que',
+        value: 0 }],
+      buttonFilter: false,
     },
   );
 
@@ -33,11 +39,52 @@ function PlanetsProvider({ children }) {
     });
   };
 
+  const planetsFilter = () => {
+    if (search.buttonFilter) {
+      return data.filter((planets) => {
+        switch (comparison) {
+        case 'maior que':
+          return Number(planets[column]) > value;
+        case 'menor que':
+          return Number(planets[column]) < value;
+        case 'igual a':
+          return planets[column] === value;
+        default:
+          return '';
+        }
+      });
+    }
+    return data;
+  };
+
+  const onClickFilterNumber = () => {
+    setSearch({
+      ...search,
+      filterByNumericValues: [{
+        column,
+        comparison,
+        value }],
+      buttonFilter: true,
+    });
+  };
+
   useEffect(() => {
     planetsApi();
   }, []);
 
-  const context = { data, setData, search, onChangeSearch };
+  const context = { data,
+    setData,
+    search,
+    onChangeSearch,
+    column,
+    setColumn,
+    comparison,
+    setComparison,
+    value,
+    setValue,
+    onClickFilterNumber,
+    planetsFilter,
+  };
   return (
     apiLoading && (
       <PlanetsContext.Provider value={ context }>
