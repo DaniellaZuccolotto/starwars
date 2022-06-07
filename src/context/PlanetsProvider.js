@@ -5,6 +5,7 @@ import ResquestAPI from '../services/ResquestAPI';
 
 function PlanetsProvider({ children }) {
   const [data, setData] = useState([]);
+  const [headerTable, setHeaderTable] = useState([]);
   const [apiLoading, setApiLoading] = useState(false);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
@@ -21,13 +22,9 @@ function PlanetsProvider({ children }) {
 
   const planetsApi = async () => {
     const retorno = await ResquestAPI();
-    const planetsResidents = retorno.map((planets) => {
-      if (delete planets.residents) {
-        return planets;
-      }
-      return null;
-    });
-    setData(planetsResidents);
+    retorno.map((planets) => delete planets.residents);
+    setData(retorno);
+    setHeaderTable(retorno);
     setApiLoading(true);
   };
 
@@ -83,6 +80,7 @@ function PlanetsProvider({ children }) {
     setValue,
     onClickFilterNumber,
     planetsFilter,
+    headerTable,
   };
   return (
     apiLoading && (

@@ -2,12 +2,12 @@ import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function Table() {
-  const { data, search } = useContext(PlanetsContext);
+  const { data, search, headerTable } = useContext(PlanetsContext);
   return (
     <table>
       <thead>
         <tr>
-          {Object.keys(data[0]).map((planets, i) => <th key={ i }>{planets}</th>)}
+          {Object.keys(headerTable[0]).map((planets, i) => <th key={ i }>{planets}</th>)}
         </tr>
       </thead>
       <tbody>
