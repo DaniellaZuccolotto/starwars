@@ -24,10 +24,6 @@ function PlanetsProvider({ children }) {
   const [search, setSearch] = useState(
     {
       filterByName: { name: '' },
-      filterByNumericValues: [{
-        column: 'population',
-        comparison: 'maior que',
-        value: 0 }],
     },
   );
 
@@ -41,17 +37,13 @@ function PlanetsProvider({ children }) {
     const newArray = [];
     const array = retorno.map((planets) => planets.name);
     array.sort();
-    console.log(array);
     array.forEach((names) => {
       retorno.forEach((planets) => {
-        console.log(planets.name);
-        console.log(names);
         if (planets.name === names) {
           newArray.push(planets);
         }
       });
     });
-    console.log(newArray);
     return newArray;
   };
 
@@ -93,13 +85,6 @@ function PlanetsProvider({ children }) {
   // };
 
   const onClickFilterNumber = (objFilter) => {
-    // setSearch({
-    //   ...search,
-    //   filterByNumericValues: [{
-    //     column,
-    //     comparison,
-    //     value }],
-    // });
     setFilter([...filter, objFilter]);
     setColumn('population');
     deleteOption();
