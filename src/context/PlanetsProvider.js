@@ -4,19 +4,21 @@ import PlanetsContext from './PlanetsContext';
 import ResquestAPI from '../services/ResquestAPI';
 
 function PlanetsProvider({ children }) {
+  const allOptions = {
+    population: 'population',
+    orbital_period: 'orbital_period',
+    diameter: 'diameter',
+    rotation_period: 'rotation_period',
+    surface_water: 'surface_water',
+  };
   const [data, setData] = useState([]);
   const [headerTable, setHeaderTable] = useState([]);
   const [apiLoading, setApiLoading] = useState(false);
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
-  const [optionColumn, setOptionColumn] = useState({
-    population: 'population',
-    orbital_period: 'orbital_period',
-    diameter: 'diameter',
-    rotation_period: 'rotation_period',
-    surface_water: 'surface_water',
-  });
+  const [filter, setFilter] = useState([]);
+  const [optionColumn, setOptionColumn] = useState(allOptions);
   const [search, setSearch] = useState(
     {
       filterByName: { name: '' },
@@ -48,25 +50,29 @@ function PlanetsProvider({ children }) {
     });
   };
 
-  const planetsFilter = (buttonFilter) => {
-    if (buttonFilter) {
-      return data.filter((planets) => {
-        switch (comparison) {
-        case 'maior que':
-          return Number(planets[column]) > value;
-        case 'menor que':
-          return Number(planets[column]) < value;
-        case 'igual a':
-          return planets[column] === value;
-        default:
-          return '';
-        }
-      });
-    }
-    return data;
-  };
+  const planetsFilter = (arrayFilter) => arrayFilter
+    .reduce((acc, filterMap) => acc.filter((planets) => {
+      switch (filterMap.comparison) {
+      case 'maior que':
+        return Number(planets[filterMap.column]) > filterMap.value;
+      case 'menor que':
+        return Number(planets[filterMap.column]) < filterMap.value;
+      case 'igual a':
+        return planets[filterMap.column] === filterMap.value;
+      default:
+        return '';
+      }
+    }), headerTable);
 
-  const onClickFilterNumber = () => {
+  // const listFilter = (column2, comparison2, value2) => {
+  //   setFilter((prevState) => [...prevState, {
+  //     column2,
+  //     comparison2,
+  //     value2,
+  //   }]);
+  // };
+
+  const onClickFilterNumber = (objFilter) => {
     setSearch({
       ...search,
       filterByNumericValues: [{
@@ -74,8 +80,10 @@ function PlanetsProvider({ children }) {
         comparison,
         value }],
     });
-    setData(planetsFilter(true));
+    setFilter([...filter, objFilter]);
+    setColumn('population');
     deleteOption();
+    setData(planetsFilter([...filter, objFilter]));
   };
 
   useEffect(() => {
@@ -96,6 +104,10 @@ function PlanetsProvider({ children }) {
     planetsFilter,
     headerTable,
     optionColumn,
+    filter,
+    setFilter,
+    setOptionColumn,
+    allOptions,
   };
   return (
     apiLoading && (
