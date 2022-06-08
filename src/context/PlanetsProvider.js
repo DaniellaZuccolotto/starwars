@@ -10,6 +10,13 @@ function PlanetsProvider({ children }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [optionColumn, setOptionColumn] = useState({
+    population: 'population',
+    orbital_period: 'orbital_period',
+    diameter: 'diameter',
+    rotation_period: 'rotation_period',
+    surface_water: 'surface_water',
+  });
   const [search, setSearch] = useState(
     {
       filterByName: { name: '' },
@@ -19,6 +26,12 @@ function PlanetsProvider({ children }) {
         value: 0 }],
     },
   );
+
+  const deleteOption = () => {
+    const optionDelete = optionColumn;
+    delete optionDelete[column];
+    setOptionColumn(optionDelete);
+  };
 
   const planetsApi = async () => {
     const retorno = await ResquestAPI();
@@ -62,6 +75,7 @@ function PlanetsProvider({ children }) {
         value }],
     });
     setData(planetsFilter(true));
+    deleteOption();
   };
 
   useEffect(() => {
@@ -81,6 +95,7 @@ function PlanetsProvider({ children }) {
     onClickFilterNumber,
     planetsFilter,
     headerTable,
+    optionColumn,
   };
   return (
     apiLoading && (

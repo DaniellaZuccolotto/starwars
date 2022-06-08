@@ -12,6 +12,7 @@ function Form() {
     setValue,
     value,
     onClickFilterNumber,
+    optionColumn,
   } = useContext(PlanetsContext);
 
   return (
@@ -32,11 +33,10 @@ function Form() {
         onChange={ ({ target }) => { setColumn(target.value); } }
         value={ column }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {
+          Object.keys(optionColumn).map((option, i) => (
+            <option value={ option } key={ i }>{option}</option>))
+        }
       </select>
       <select
         data-testid="comparison-filter"
