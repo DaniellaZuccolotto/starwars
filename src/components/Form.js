@@ -4,6 +4,7 @@ import PlanetsContext from '../context/PlanetsContext';
 function Form() {
   const {
     setData,
+    data,
     search,
     onChangeSearch,
     column,
@@ -19,7 +20,58 @@ function Form() {
     planetsFilter,
     setOptionColumn,
     allOptions,
+    setOrdemColumn,
+    ordemColumn,
   } = useContext(PlanetsContext);
+
+  const functionSortPopulation = (columnOrder, sortOrder) => {
+    const arraySort = [];
+    const arrayUnknown = [];
+    const newArray = [];
+    data.forEach((planets) => {
+      if (planets[columnOrder] !== 'unknown') {
+        arraySort.push(planets[columnOrder]);
+      } else {
+        arrayUnknown.push(planets);
+      }
+    });
+    if (sortOrder === 'ASC') {
+      arraySort.sort((a, b) => a - b);
+    }
+    if (sortOrder === 'DESC') {
+      arraySort.sort((a, b) => b - a);
+    }
+    arraySort.forEach((population) => {
+      data.forEach((planets) => {
+        if (planets[columnOrder] === population) {
+          newArray.push(planets);
+        }
+      });
+    });
+    const newArrayCompleto = [...newArray, ...arrayUnknown];
+    setData(newArrayCompleto);
+  };
+
+  const functionSort = (columnOrder, sortOrder) => {
+    // const arraySort = [];
+    const newArray = [];
+    const array = data.map((planets) => planets[columnOrder]);
+    if (sortOrder === 'ASC') {
+      array.sort((a, b) => a - b);
+    }
+    if (sortOrder === 'DESC') {
+      array.sort((a, b) => b - a);
+    }
+    array.forEach((filterOrder) => {
+      data.forEach((planets) => {
+        if (planets[columnOrder] === filterOrder) {
+          newArray.push(planets);
+        }
+      });
+    });
+    setData(newArray);
+  };
+
   return (
     <main>
       <form>
@@ -108,6 +160,80 @@ function Form() {
           Delete All Filter
         </button>
       </ul>
+      <form>
+        <select
+          data-testid="column-sort"
+          onChange={ ({ target }) => {
+            setOrdemColumn({
+              ...ordemColumn,
+              order: {
+                ...ordemColumn.order,
+                column: target.value,
+              },
+            });
+          } }
+          value={ ordemColumn.order.column }
+        >
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
+        </select>
+        <label htmlFor="input-radio">
+          Ascendente
+          <input
+            id="input-radio"
+            data-testid="column-sort-input-asc"
+            type="radio"
+            name="order"
+            value="ASC"
+            onChange={ ({ target }) => {
+              setOrdemColumn({
+                ...ordemColumn,
+                order: {
+                  ...ordemColumn.order,
+                  sort: target.value,
+                },
+              });
+            } }
+          />
+        </label>
+        <label htmlFor="input-radio2">
+          Descendente
+          <input
+            id="input-radio2"
+            data-testid="column-sort-input-desc"
+            type="radio"
+            name="order"
+            value="DESC"
+            onChange={ ({ target }) => {
+              console.log(target.value);
+              setOrdemColumn({
+                ...ordemColumn,
+                order: {
+                  ...ordemColumn.order,
+                  sort: target.value,
+                },
+              });
+            } }
+          />
+        </label>
+        <button
+          type="button"
+          data-testid="column-sort-button"
+          onClick={ () => {
+            if (ordemColumn.order.column === 'population'
+                || ordemColumn.order.column === 'surface_water') {
+              functionSortPopulation(ordemColumn.order.column, ordemColumn.order.sort);
+            } else {
+              functionSort(ordemColumn.order.column, ordemColumn.order.sort);
+            }
+          } }
+        >
+          Ordenar
+        </button>
+      </form>
     </main>
   );
 }

@@ -19,6 +19,8 @@ function PlanetsProvider({ children }) {
   const [value, setValue] = useState(0);
   const [filter, setFilter] = useState([]);
   const [optionColumn, setOptionColumn] = useState(allOptions);
+  const [ordemColumn, setOrdemColumn] = useState({
+    order: { column: 'population', sort: 'ASC' } });
   const [search, setSearch] = useState(
     {
       filterByName: { name: '' },
@@ -35,11 +37,29 @@ function PlanetsProvider({ children }) {
     setOptionColumn(optionDelete);
   };
 
+  const orderInitial = (retorno) => {
+    const newArray = [];
+    const array = retorno.map((planets) => planets.name);
+    array.sort();
+    console.log(array);
+    array.forEach((names) => {
+      retorno.forEach((planets) => {
+        console.log(planets.name);
+        console.log(names);
+        if (planets.name === names) {
+          newArray.push(planets);
+        }
+      });
+    });
+    console.log(newArray);
+    return newArray;
+  };
+
   const planetsApi = async () => {
     const retorno = await ResquestAPI();
     retorno.map((planets) => delete planets.residents);
-    setData(retorno);
     setHeaderTable(retorno);
+    setData(orderInitial(retorno));
     setApiLoading(true);
   };
 
@@ -73,13 +93,13 @@ function PlanetsProvider({ children }) {
   // };
 
   const onClickFilterNumber = (objFilter) => {
-    setSearch({
-      ...search,
-      filterByNumericValues: [{
-        column,
-        comparison,
-        value }],
-    });
+    // setSearch({
+    //   ...search,
+    //   filterByNumericValues: [{
+    //     column,
+    //     comparison,
+    //     value }],
+    // });
     setFilter([...filter, objFilter]);
     setColumn('population');
     deleteOption();
@@ -90,9 +110,11 @@ function PlanetsProvider({ children }) {
     planetsApi();
   }, []);
 
-  const context = { data,
+  const context = {
+    data,
     setData,
     search,
+    setSearch,
     onChangeSearch,
     column,
     setColumn,
@@ -108,6 +130,8 @@ function PlanetsProvider({ children }) {
     setFilter,
     setOptionColumn,
     allOptions,
+    setOrdemColumn,
+    ordemColumn,
   };
   return (
     apiLoading && (
