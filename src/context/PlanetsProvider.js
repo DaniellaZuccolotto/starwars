@@ -76,14 +76,6 @@ function PlanetsProvider({ children }) {
       }
     }), headerTable);
 
-  // const listFilter = (column2, comparison2, value2) => {
-  //   setFilter((prevState) => [...prevState, {
-  //     column2,
-  //     comparison2,
-  //     value2,
-  //   }]);
-  // };
-
   const onClickFilterNumber = (objFilter) => {
     setFilter([...filter, objFilter]);
     setColumn('population');

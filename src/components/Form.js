@@ -24,7 +24,7 @@ function Form() {
     ordemColumn,
   } = useContext(PlanetsContext);
 
-  const functionSortPopulation = (columnOrder, sortOrder) => {
+  const functionSort = (columnOrder, sortOrder) => {
     const arraySort = [];
     const arrayUnknown = [];
     const newArray = [];
@@ -50,26 +50,6 @@ function Form() {
     });
     const newArrayCompleto = [...newArray, ...arrayUnknown];
     setData(newArrayCompleto);
-  };
-
-  const functionSort = (columnOrder, sortOrder) => {
-    // const arraySort = [];
-    const newArray = [];
-    const array = data.map((planets) => planets[columnOrder]);
-    if (sortOrder === 'ASC') {
-      array.sort((a, b) => a - b);
-    }
-    if (sortOrder === 'DESC') {
-      array.sort((a, b) => b - a);
-    }
-    array.forEach((filterOrder) => {
-      data.forEach((planets) => {
-        if (planets[columnOrder] === filterOrder) {
-          newArray.push(planets);
-        }
-      });
-    });
-    setData(newArray);
   };
 
   return (
@@ -223,12 +203,7 @@ function Form() {
           type="button"
           data-testid="column-sort-button"
           onClick={ () => {
-            if (ordemColumn.order.column === 'population'
-                || ordemColumn.order.column === 'surface_water') {
-              functionSortPopulation(ordemColumn.order.column, ordemColumn.order.sort);
-            } else {
-              functionSort(ordemColumn.order.column, ordemColumn.order.sort);
-            }
+            functionSort(ordemColumn.order.column, ordemColumn.order.sort);
           } }
         >
           Ordenar
