@@ -1,41 +1,30 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+.main {
   align-items: center;
-  background-color: #282c34;
+  background: url('./image/dark-space.jpg') no-repeat center fixed;
+  background-size: cover;
   color: white;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
   min-height: 100vh;
+  min-width: 100vw;
+  padding-block: 30px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+table {
+  /* Aplicação da estilização com overflow
+  horizontal proveniente do Stack Overflow (link:
+  https://stackoverflow.com/questions/19794211/horizontal-scroll-on-overflow-of-table) */
+  display: block;
+  line-height: 60px;
+  margin: 0 auto;
+  max-width: fit-content;
+  overflow-x: auto;
+  padding-top: 30px;
+  white-space: nowrap;
 }

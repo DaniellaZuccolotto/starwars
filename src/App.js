@@ -7,8 +7,10 @@ import PlanetsProvider from './context/PlanetsProvider';
 function App() {
   return (
     <PlanetsProvider>
-      <Form />
-      <Table />
+      <div className="main">
+        <Form />
+        <Table />
+      </div>
     </PlanetsProvider>
   );
 }

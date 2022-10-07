@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+// import darkSpace from '../image/dark-space.jpg';
+import starWarsLogo from '../image/star-wars-logo.png';
 import './Form.css';
 
 function Form() {
@@ -54,11 +56,13 @@ function Form() {
   };
 
   return (
-    <main>
-      <form>
+    <main className="main-content">
+      <img className="image" src={ starWarsLogo } alt="starWarsLogo" />
+      <form className="typePlanetName">
         <label htmlFor="input-filter">
           Pesquise aqui:
           <input
+            className="form-control"
             data-testid="name-filter"
             type="text"
             id="input-filter"
@@ -68,6 +72,7 @@ function Form() {
           />
         </label>
         <select
+          className="form-control dropdown-toggle"
           data-testid="column-filter"
           onChange={ ({ target }) => { setColumn(target.value); } }
           value={ column }
@@ -78,6 +83,7 @@ function Form() {
           }
         </select>
         <select
+          className="form-control"
           data-testid="comparison-filter"
           onChange={ ({ target }) => { setComparison(target.value); } }
           value={ comparison }
@@ -89,6 +95,7 @@ function Form() {
         <label htmlFor="number-filter">
           Digite um numero:
           <input
+            className="form-control"
             data-testid="value-filter"
             type="number"
             id="number-filter"
@@ -114,6 +121,7 @@ function Form() {
             <li key={ i } data-testid="filter">
               {`${filtro.column}, ${filtro.comparison}, ${filtro.value}`}
               <button
+                // className="btn-delete-ul"
                 type="button"
                 onClick={ () => {
                   const newFilter = filter.filter((_, index) => index !== i);
@@ -130,6 +138,7 @@ function Form() {
             </li>))
         }
         <button
+          // className="btn-delete"
           type="button"
           data-testid="button-remove-filters"
           onClick={ () => {
@@ -143,6 +152,7 @@ function Form() {
       </ul>
       <form>
         <select
+          className="form-control"
           data-testid="column-sort"
           onChange={ ({ target }) => {
             setOrdemColumn({
@@ -164,6 +174,7 @@ function Form() {
         <label htmlFor="input-radio">
           Ascendente
           <input
+            className=""
             id="input-radio"
             data-testid="column-sort-input-asc"
             type="radio"
@@ -183,6 +194,7 @@ function Form() {
         <label htmlFor="input-radio2">
           Descendente
           <input
+            className=""
             id="input-radio2"
             data-testid="column-sort-input-desc"
             type="radio"
