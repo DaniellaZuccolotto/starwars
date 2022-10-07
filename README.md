@@ -1,16 +1,19 @@
-# 🚧 README em construção 🚧
+# Projeto Star Wars Planet Search 🪐
 
-<!-- Olá, Tryber!
+Aplicação web construída para busca dos planetas presentes na franquia Star Wars. Em relação aos parâmetros retornados pela API, é possível filtrar por: população, período de rotação, diâmetro, período orbital e percentual de água presente na superfície.
 
-Esse é apenas um arquivo inicial para o README do seu projeto.
+* Construída utilizado React, Context API, Hooks e CSS3.
 
-É essencial que você preencha esse documento por conta própria, ok?
+### Instruções
 
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
+- Para rodar a aplicação localmente, realize o clone do projeto e utilize os comandos a seguir para inicializar:
 
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
+```
+npm install // para instalar as dependências
+npm start // para iniciar a aplicação
+```
 
--->
+### Demonstração
+
+👨🏻‍💻 **Acessar:** _[Clique Aqui](https://starwars-blush-gamma.vercel.app/)_
+
