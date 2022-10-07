@@ -15,5 +15,5 @@ npm start // para iniciar a aplicação
 
 ### Demonstração
 
-👨🏻‍💻 **Acessar:** _[Clique Aqui](https://starwars-daniellazuccolotto.vercel.app/)_
+👨🏻‍💻 **Acessar:** _[Clique Aqui](https://starwars-blush-gamma.vercel.app/)_
 Obs.: Estilização em produção.
